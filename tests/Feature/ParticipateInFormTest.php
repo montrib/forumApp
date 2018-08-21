@@ -33,4 +33,22 @@ class ParticipateInFormTest extends TestCase
         $this->get($thread->path())->assertSee($reply->body);
 
     }
+    /** @test */
+    public function a_reply_requires_a_body()
+    {
+        $this->withExceptionHandling()->signIn();
+
+        $this->publishReply(['body' => null])
+            ->assertSessionHasErrors('body');
+    }
+
+    public function publishReply($overrides = [])
+    {
+        $this->withExceptionHandling()->signIn();
+
+        $thread = create('App\Thread');
+        $reply = make('App\Reply', $overrides);
+
+        return $this->post($thread->path() . '/replies', $reply->toArray());
+    }
 }
