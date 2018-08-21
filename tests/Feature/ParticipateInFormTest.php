@@ -9,14 +9,14 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class ParticipateInFormTest extends TestCase
 {
-    use DatabaseMigrations;
+    //use DatabaseMigrations;
 
     /** @test */
-    public function unauthenticated_user_may_not_participate_in_form_threads()
+    function unauthenticated_users_may_not_add_replies()
     {
-        $this->expectException('Illuminate\Auth\AuthenticationException');
-
-        $this->post('/threads/1/replies', []);
+        $this->withExceptionHandling()
+            ->post('/threads/some-channel/1/replies', [])
+            ->assertRedirect('/login');
     }
 
     /** @test */
@@ -26,7 +26,7 @@ class ParticipateInFormTest extends TestCase
 
         $thread = factory('App\Thread')->create();
 
-        $reply = factory('App\Reply')->make();
+        $reply = factory('App\Reply')->create();
 
         $this->post($thread->path() . '/replies', $reply->toArray());
 

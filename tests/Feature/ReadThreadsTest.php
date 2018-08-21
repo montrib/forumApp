@@ -8,7 +8,7 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 class ReadThreadsTest extends TestCase
 {
-    use DatabaseMigrations;
+    //use DatabaseMigrations;
 
     protected $thread;
 
@@ -29,7 +29,7 @@ class ReadThreadsTest extends TestCase
     /** @test */
     public function a_user_can_read_a_single_thread()
     {
-        $this->get('/threads/'. $this->thread->id)->assertSee($this->thread->title);
+        $this->get($this->thread->path())->assertSee($this->thread->title);
     }
 
     /** @test */
@@ -37,7 +37,7 @@ class ReadThreadsTest extends TestCase
     {
         $reply = factory('App\Reply')
             ->create(['thread_id' => $this->thread->id]);
-        $this->get('/threads/'. $this->thread->id)->assertSee($reply->body);
+        $this->get($this->thread->path())->assertSee($reply->body);
 
     }
 
