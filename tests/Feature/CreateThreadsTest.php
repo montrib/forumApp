@@ -9,7 +9,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class CreateThreadsTest extends TestCase
 {
-    use DatabaseMigrations;
+    //use DatabaseMigrations;
 
     /** @test */
     public function guests_may_not_create_threads()
@@ -34,14 +34,4 @@ class CreateThreadsTest extends TestCase
             ->assertSee($thread->body);
     }
 
-    /** @test */
-    public function a_thread_requires_a_title()
-    {
-        $this->signIn();
-
-        $thread = make('App\Thread', ['title' => null]);
-
-        $this->post('/threads', $thread->toArray())
-            ->assertSessionHasErrors('title');
-    }
 }

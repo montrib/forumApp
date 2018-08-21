@@ -19,7 +19,7 @@ Route::get('/threads', 'ThreadsController@index');
 Route::post('/threads', 'ThreadsController@store');
 Route::get('/threads/{channel}/{thread}', 'ThreadsController@show');
 Route::get('threads/create', 'ThreadsController@create');
-//Route::resource('threads', 'ThreadsController');
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
