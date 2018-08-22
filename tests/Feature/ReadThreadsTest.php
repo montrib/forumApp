@@ -8,7 +8,7 @@ use Illuminate\Foundation\Testing\DatabaseMigrations;
 
 class ReadThreadsTest extends TestCase
 {
-    //use DatabaseMigrations;
+    use DatabaseMigrations;
 
     protected $thread;
 
@@ -29,6 +29,7 @@ class ReadThreadsTest extends TestCase
     /** @test */
     public function a_user_can_read_a_single_thread()
     {
+
         $this->get($this->thread->path())->assertSee($this->thread->title);
     }
 
@@ -51,6 +52,20 @@ class ReadThreadsTest extends TestCase
         $this->get('/threads/' . $channel->slug)
             ->assertSee($threadInChannel->title)
             ->assertDontSee($threadNotInChannel);
+
+    }
+
+    /** @test */
+    public function a_user_can_filter_threads_by_any_username()
+    {
+        $this->signIn(create('App\User', ['name' => 'JohnDoe']));
+
+        $threadByJohn = create('App\Thread', ['user_id' => auth()->id()]);
+        $threadNotByJohn = create('App\Thread');
+
+        $this->get('/threads?by=JohnDoe')
+            ->assertSee($threadByJohn->title)
+            ->assertDontSee($threadNotByJohn->title);
 
     }
 

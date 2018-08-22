@@ -9,7 +9,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class ParticipateInFormTest extends TestCase
 {
-    //use DatabaseMigrations;
+    use DatabaseMigrations;
 
     /** @test */
     function unauthenticated_users_may_not_add_replies()

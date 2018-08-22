@@ -9,7 +9,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class CreateThreadsTest extends TestCase
 {
-    //use DatabaseMigrations;
+    use DatabaseMigrations;
 
     /** @test */
     public function guests_may_not_create_threads()
