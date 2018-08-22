@@ -69,4 +69,19 @@ class ReadThreadsTest extends TestCase
 
     }
 
+    /** @test */
+    public function a_user_can_filter_threads_by_popularity()
+    {
+        $threadWithTwoReplies = create('App\Thread');
+        create('App\Reply', ['thread_id' => $threadWithTwoReplies], 2);
+
+        $threadWithThreeReplies = create('App\Thread');
+        create('App\Reply', ['thread_id' => $threadWithThreeReplies], 3);
+
+
+        $response = $this->getJson('/threads?popular')->json();
+
+        $this->assertEquals([0,2,3], array_column($response, 'replies_count'));
+    }
+
 }
