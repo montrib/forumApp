@@ -24,8 +24,9 @@ class FavouritesTest extends TestCase
         $this->signIn();
 
         $reply = factory('App\Reply')->create();
-//        dd($reply);
-        $this->post('replies/' . $reply->id . '/favourites');
+        $this->post('replies/' . $reply->id . '/favourites', []);
+
+        $reply->refresh();
 
         $this->assertCount(1, $reply->favourites);
     }
